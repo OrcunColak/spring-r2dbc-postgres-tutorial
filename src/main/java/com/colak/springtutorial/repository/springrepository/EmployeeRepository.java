@@ -12,7 +12,7 @@ import reactor.core.publisher.Flux;
  * Spring R2dbcRepository derives from Spring ReactiveCrudRepository
  */
 @Repository
-public interface EmployeeRepository extends R2dbcRepository<Employee, Integer> {
+public interface EmployeeRepository extends R2dbcRepository<Employee, Long> {
 
     //******DERIVED QUERY******
     Flux<Employee> findByFirstNameContains(String name);

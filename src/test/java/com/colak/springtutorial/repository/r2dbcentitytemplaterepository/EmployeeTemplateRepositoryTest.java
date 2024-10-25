@@ -54,21 +54,21 @@ class EmployeeTemplateRepositoryTest {
     @Test
     void save() {
         Employee employee = new Employee();
-        employee.setId(5);
+        employee.setId(5L);
         employee.setFirstName("employee5");
         employee.setLastName("lastname5");
         employee.setNew(true);
-        Mono<Integer> id = employeeTemplateRepository.save(employee);
+        Mono<Long> id = employeeTemplateRepository.save(employee);
 
         StepVerifier.create(id)
-                .expectNext(5)
+                .expectNext(5L)
                 .verifyComplete();
     }
 
     @Test
     void update() {
         Employee employee = new Employee();
-        employee.setId(1);
+        employee.setId(1L);
         employee.setFirstName("employee11");
         employee.setLastName("lastname11");
         Mono<Long> numberOfRows = employeeTemplateRepository.update(employee);

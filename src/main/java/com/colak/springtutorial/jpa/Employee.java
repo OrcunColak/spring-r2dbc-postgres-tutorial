@@ -18,10 +18,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee implements Persistable<Integer> {
+public class Employee implements Persistable<Long> {
 
     @Id
-    private Integer id;
+    private Long id;
 
     @Column("first_name")
     private String firstName;

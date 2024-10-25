@@ -23,13 +23,13 @@ import java.util.List;
 class EmployeeRepositoryTest {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository repository;
 
 
     @Test
     @Order(1)
     void findAll() {
-        Flux<Employee> employeeFlux = employeeRepository.findAll();
+        Flux<Employee> employeeFlux = repository.findAll();
 
         StepVerifier.create(employeeFlux)
                 .expectNextCount(4)
@@ -40,11 +40,11 @@ class EmployeeRepositoryTest {
     @Order(2)
     void findAllPaged() {
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.by("first_name").descending());
-        Flux<Employee> employeeFlux = employeeRepository.findAllBy(pageRequest);
+        Flux<Employee> employeeFlux = repository.findAllBy(pageRequest);
 
         List<Employee> expectedList = List.of(
-                new Employee(4, "employee4", "lastname4", false),
-                new Employee(3, "employee3", "lastname3", false)
+                new Employee(4L, "employee4", "lastname4", false),
+                new Employee(3L, "employee3", "lastname3", false)
         );
 
         StepVerifier.create(employeeFlux)
@@ -56,7 +56,7 @@ class EmployeeRepositoryTest {
     @Test
     @Order(3)
     void findById() {
-        Mono<Employee> employeeMono = employeeRepository.findById(1);
+        Mono<Employee> employeeMono = repository.findById(1L);
 
         StepVerifier.create(employeeMono)
                 .expectNextCount(1)
@@ -66,7 +66,7 @@ class EmployeeRepositoryTest {
     @Test
     @Order(4)
     void findByFirstNameContains() {
-        Flux<Employee> employeeFlux = employeeRepository.findByFirstNameContains("employee");
+        Flux<Employee> employeeFlux = repository.findByFirstNameContains("employee");
 
         StepVerifier.create(employeeFlux)
                 .expectNextCount(4)
@@ -76,7 +76,7 @@ class EmployeeRepositoryTest {
     @Test
     @Order(5)
     void findByLastname() {
-        Flux<Employee> employeeFlux = employeeRepository.findByLastName("lastname1");
+        Flux<Employee> employeeFlux = repository.findByLastName("lastname1");
 
         StepVerifier.create(employeeFlux)
                 .expectNextCount(1)
@@ -86,7 +86,7 @@ class EmployeeRepositoryTest {
     @Test
     @Order(6)
     void findByLastnameWithLimit() {
-        Flux<Employee> employeeFlux = employeeRepository.findByLastName("lastname1", Limit.of(2));
+        Flux<Employee> employeeFlux = repository.findByLastName("lastname1", Limit.of(2));
 
         StepVerifier.create(employeeFlux)
                 .expectNextCount(1)
@@ -96,7 +96,7 @@ class EmployeeRepositoryTest {
     @Test
     @Order(7)
     void deleteById() {
-        Mono<Void> numberOfRows = employeeRepository.deleteById(1);
+        Mono<Void> numberOfRows = repository.deleteById(1L);
 
         StepVerifier.create(numberOfRows)
                 .verifyComplete();
@@ -106,12 +106,12 @@ class EmployeeRepositoryTest {
     @Order(8)
     void save() {
         Employee employee = new Employee();
-        employee.setId(5);
+        employee.setId(5L);
         employee.setFirstName("employee5");
         employee.setLastName("lastname5");
         employee.setNew(true);
 
-        Mono<Employee> savedEmployee = employeeRepository.save(employee);
+        Mono<Employee> savedEmployee = repository.save(employee);
 
         StepVerifier.create(savedEmployee)
                 .expectNextMatches(savedEntity -> savedEntity.getId() != null)
@@ -122,10 +122,10 @@ class EmployeeRepositoryTest {
     @Order(9)
     void update() {
         Employee employee = new Employee();
-        employee.setId(3);
+        employee.setId(3L);
         employee.setFirstName("employee33");
         employee.setLastName("lastname33");
-        Mono<Employee> updatedEmployee = employeeRepository.save(employee);
+        Mono<Employee> updatedEmployee = repository.save(employee);
 
         StepVerifier.create(updatedEmployee)
                 .expectNextCount(1)

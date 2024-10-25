@@ -65,7 +65,7 @@ public class EmployeeTemplateRepository {
 
     }
 
-    public Mono<Integer> save(Employee employee) {
+    public Mono<Long> save(Employee employee) {
         return this.r2dbcEntityTemplate.insert(Employee.class)
                 .using(employee)
                 .map(post -> employee.getId());

@@ -39,7 +39,7 @@ public class EmployeeDatabaseClientRepository {
         // DB column is BIGINT which corresponds to Long.
         // Convert Long to Integer
         Number number = (Number) row.get("id");
-        Integer id = number.intValue();
+        Long id = number.longValue();
 
         String firstName = (String) row.get("first_name");
         String lastName = (String) row.get("last_name");
